@@ -1,8 +1,10 @@
 import json
+import sys
 
 #Fix text file json structure
-with open("sandy_sample.txt") as f:
-	with open("sandy.json", "w+") as out:
+with open(sys.argv[1]) as f:
+	name = sys.argv[1].split(".")[0] + ".json"
+	with open(name, "w+") as out:
 		for line in f:
 			line = line.rstrip().replace("None", "\"null\"")
 			line_fix = []
