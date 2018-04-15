@@ -41,7 +41,7 @@ def sanitize(text):
 				if clean != "":
 					final.append(clean)
 
-	print(words, final, hashtags)
+	#print(words, final, hashtags)
 	return final, hashtags
 def gen_features(word_list):
 	features = [0] * 4
@@ -57,21 +57,38 @@ def gen_features(word_list):
 	features[3] = len(word_list)
 	return features
 
+def gen_categories(word_list):
+	categories = [0] * 6
+	for i in range(0, len(word_list)):
+		if word_list[i] in keywords_a:
+			categories[0] += 1
+		if word_list[i] in keywords_b:
+			categories[1] += 1
+		if word_list[i] in keywords_c:
+			categories[2] += 1
+		if word_list[i] in keywords_d:
+			categories[3] += 1
+		if word_list[i] in keywords_e:
+			categories[4] += 1
+
+	categories[5] = len(word_list)
+	return categories
+
 clusts = None
 row_to_id = {}
 with open("sandy_2.json") as f:
 	for line in f:
 		try:
 			t = json.loads(line)
-			print(t['text'])
+			#print(t['text'])
 			if t['text']:
 				words, tags = sanitize(t['text'])
 				if t['from_user_name'] != 0:
 					tweets[t["id"]] = (words, tags, t['text'], t['from_user_name'])
 				else:
 					tweets[t["id"]] = (words, tags, t['text'], "json issues")
-		except json.decoder.JSONDecodeError as e:
-			print("no")
+		except ValueError as e:
+			pass
 	features = np.zeros((len(tweets), 4))
 	count = 0
 	for t in tweets:
@@ -81,17 +98,45 @@ with open("sandy_2.json") as f:
 		for i in range(0, len(x)):
 			features[count, i] = x[i]
 		count += 1
-	print(len(row_to_id))
+	#print(len(row_to_id))
 	mbk = cluster.MiniBatchKMeans(n_clusters=2)
 	clusts = mbk.fit_predict(features)
 
+relevant_tweets = []
 with open("class_0.txt", "w+") as out0:
 	with open("class_1.txt", "w+") as out1:
+		count = 0
 		for i in range(len(clusts)):
 			t = row_to_id[i]
-			print(tweets[t][3], tweets[t][2])
+			#print(tweets[t][3], tweets[t][2])
 			if clusts[i] == 0:
 				out0.write(tweets[t][3] + "\n" + tweets[t][2] + "\n")
+				# Relevant tweets
+				relevant_tweets.append({	"tweet_author": 	tweets[t][3], 
+								"tweet_text": 		tweets[t][2]})
+				count += 1
 			else:
 				out1.write(tweets[t][3] + "\n" + tweets[t][2] + "\n")
+
+'''
+Categorizing the Relevant Tweets
+'''
+count = 0
+
+for tweet_dict in relevant_tweets:
+	categories = np.zeros((len(tweets), 6))
+	x = gen_categories(tweet_dict["tweet_text"])
+	for i in range(0, len(x)):
+		categories[count, i] = x[i]
+	count += 1
+mbk = cluster.MiniBatchKMeans(n_clusters = 5)
+clusts = mbk.fit_predict(categories)
+for i in range(len(clusts)):
+	if clusts[i] == 0:
+		print "-"
+		print relevant_tweets[i]["tweet_text"]
+		break
+
+
+
 				
