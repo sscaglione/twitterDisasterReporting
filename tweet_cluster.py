@@ -8,6 +8,21 @@ keywords_primary = set(("hurricane", "sandy", "storm", "surge", "canceled"))
 keywords_secondary = set(("surge", "canceled", "evac", "evacuate", "flood", "wind", "winds", "police", "authorities", "emerg", "emergency", "emergencies", "closing", "crisis"))
 no_words = set(("glass", "hawker", "prayers", "campaign", "campaigns", "cheeks", "election", "nigga", "niggas", "ain't", "shit", "fuck", "gop", "u", "obama", "romney"))
 
+keywords_a = set(("flood", "flooding", "water", "overflow", "flow", "stream", "river", "overflowed", "soaked"))
+keywords_b = set(("electrical", "electricity", "power", "blackout", "wires", "phone", "pole", "poles"))
+keywords_c = set(("trap", "stuck", "trapped", "underneath", "between"))
+keywords_d = set(("blocked", "block", "road", "street", "avenue", "fallen", "tree", "pole"))
+keywords_e = set(("fire", "flames", "smoke", "fires", "flame", "smoking", "ignited", "ignite"))
+
+
+'''
+a: flood damage
+b: electrical issues 
+c: people trapped
+d: road blocked
+e: fire
+'''
+
 def sanitize(text):
 	words = text.split()
 	final = []
