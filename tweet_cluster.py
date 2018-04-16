@@ -8,11 +8,14 @@ keywords_primary = set(("hurricane", "sandy", "storm", "surge", "canceled"))
 keywords_secondary = set(("surge", "canceled", "evac", "evacuate", "flood", "wind", "winds", "police", "authorities", "emerg", "emergency", "emergencies", "closing", "crisis"))
 no_words = set(("glass", "hawker", "prayers", "campaign", "campaigns", "cheeks", "election", "nigga", "niggas", "ain't", "shit", "fuck", "gop", "u", "obama", "romney"))
 
-keywords_a = set(("flood", "flooding", "water", "overflow", "flow", "stream", "river", "overflowed", "soaked"))
+keywords_a = set(("flood", "flooding", "flooded", "water", "overflow", "flow", "stream", "river", "overflowed", "soaked"))
 keywords_b = set(("electrical", "electricity", "power", "blackout", "wires", "phone", "pole", "poles"))
 keywords_c = set(("trap", "stuck", "trapped", "underneath", "between"))
 keywords_d = set(("blocked", "block", "road", "street", "avenue", "fallen", "tree", "pole"))
 keywords_e = set(("fire", "flames", "smoke", "fires", "flame", "smoking", "ignited", "ignite"))
+
+# Relevant tweet
+initial_relevant_tweet = "RT @newsday: Evacuation ordered for Fire Island as Hurricane #Sandy approaches http://t.co/0pTTrYoF"
 
 
 '''
@@ -58,20 +61,12 @@ def gen_features(word_list):
 	return features
 
 def gen_categories(word_list):
-	categories = [0] * 6
+	categories = [0] * 2
 	for i in range(0, len(word_list)):
 		if word_list[i] in keywords_a:
 			categories[0] += 1
-		if word_list[i] in keywords_b:
-			categories[1] += 1
-		if word_list[i] in keywords_c:
-			categories[2] += 1
-		if word_list[i] in keywords_d:
-			categories[3] += 1
-		if word_list[i] in keywords_e:
-			categories[4] += 1
 
-	categories[5] = len(word_list)
+	categories[1] = len(word_list)
 	return categories
 
 clusts = None
@@ -102,40 +97,61 @@ with open("sandy_2.json") as f:
 	mbk = cluster.MiniBatchKMeans(n_clusters=2)
 	clusts = mbk.fit_predict(features)
 
-relevant_tweets = []
+
+relevant_class = 0
 with open("class_0.txt", "w+") as out0:
 	with open("class_1.txt", "w+") as out1:
 		count = 0
 		for i in range(len(clusts)):
 			t = row_to_id[i]
-			#print(tweets[t][3], tweets[t][2])
+			
 			if clusts[i] == 0:
 				out0.write(tweets[t][3] + "\n" + tweets[t][2] + "\n")
-				# Relevant tweets
-				relevant_tweets.append({	"tweet_author": 	tweets[t][3], 
-								"tweet_text": 		tweets[t][2]})
-				count += 1
 			else:
+				if tweets[t][2] == initial_relevant_tweet:
+					relevant_class = 1
 				out1.write(tweets[t][3] + "\n" + tweets[t][2] + "\n")
+				count += 1
 
 '''
 Categorizing the Relevant Tweets
 '''
-count = 0
+# Choose the relevant file based on which class is considered relevant according to the
+# initial_relevant_tweet we assigned above because we know it's relevant
+relevant_file_name = "class_0.txt"
+if relevant_class == 1:
+	relevant_file_name = "class_1.txt"
 
+# Read the relevant tweets into a list of dictionaries
+relevant_tweets = []
+line_counter = 0
+with open(relevant_file_name) as relevant_file:
+	tweet_author = ""
+	tweet_text = ""
+	for line in relevant_file:
+		if line_counter % 2 == 0:
+			tweet_author = line
+		elif line_counter % 2 != 0:
+			tweet_text = line
+			relevant_tweets.append({	"tweet_author": 	tweet_author, 
+							"tweet_text": 		tweet_text})
+		line_counter += 1
+
+count = 0
+categories = np.zeros((len(tweets), 6))
 for tweet_dict in relevant_tweets:
-	categories = np.zeros((len(tweets), 6))
 	x = gen_categories(tweet_dict["tweet_text"])
 	for i in range(0, len(x)):
 		categories[count, i] = x[i]
 	count += 1
 mbk = cluster.MiniBatchKMeans(n_clusters = 5)
 clusts = mbk.fit_predict(categories)
+'''
 for i in range(len(clusts)):
-	if clusts[i] == 0:
-		print "-"
-		print relevant_tweets[i]["tweet_text"]
-		break
+	if clusts[i] == 1:
+		print(relevant_tweets[i]["tweet_text"])
+		'''
+		
 
 
 
