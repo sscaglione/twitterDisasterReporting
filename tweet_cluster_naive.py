@@ -8,9 +8,8 @@ keywords_primary = set(("hurricane", "sandy", "storm", "surge", "canceled"))
 keywords_secondary = set(("surge", "canceled", "evac", "evacuate", "flood", "wind", "winds", "police", "authorities", "emerg", "emergency", "emergencies", "closing", "crisis"))
 no_words = set(("glass", "hawker", "prayers", "campaign", "campaigns", "cheeks", "election", "nigga", "niggas", "ain't", "shit", "fuck", "gop", "u", "obama", "romney"))
 
-keywords_a = set(("flood", "flooding", "flooded"))
-keywords_a_secondary = set(("overflow", "flow", "stream", "river", "overflowed", "soaked", "level"))
-keywords_b = set(("electrical", "electricity", "power", "blackout", "wires", "phone", "pole", "poles", "outage", "outages", "wifi"))
+keywords_a = set(("flood", "flooding", "flooded", "overflow", "flow", "stream", "river", "overflowed", "soaked", "level"))
+keywords_b = set(("electrical", "electricity", "power", "blackout", "wires", "phone", "pole", "poles", "outage", "outages", "wifi", "lose", "lost", "cuts", "cut"))
 keywords_c = set(("trap", "stuck", "trapped", "underneath", "between"))
 keywords_d = set(("blocked", "block", "road", "street", "avenue", "fallen", "tree", "pole"))
 keywords_e = set(("fire", "flames", "smoke", "fires", "flame", "smoking", "ignited", "ignite"))
@@ -67,9 +66,6 @@ def categorize(word_list):
 		if word_list[i] in keywords_a:
 			categories[0] += 1
 			keys += 1
-		if word_list[i] in keywords_a_secondary:
-			categories[0] += 1
-			keys += 0.5
 		if word_list[i] in keywords_b:
 			categories[1] += 1
 			keys += 1
@@ -96,7 +92,7 @@ def categorize(word_list):
 
 clusts = None
 row_to_id = {}
-with open("sandy_2.json") as f:
+with open("sandy.json") as f:
 	for line in f:
 		try:
 			t = json.loads(line)
@@ -154,7 +150,7 @@ relevant_tweets = []
 line_counter = 0
 with open(relevant_file_name) as relevant_file:
 	tweet_author = ""
-	tweet_text = ""
+	tweet_text = "" 
 	for line in relevant_file:
 		if line_counter % 2 == 0:
 			tweet_author = line
