@@ -8,14 +8,15 @@ keywords_primary = set(("hurricane", "sandy", "storm", "surge", "canceled"))
 keywords_secondary = set(("surge", "canceled", "evac", "evacuate", "flood", "wind", "winds", "police", "authorities", "emerg", "emergency", "emergencies", "closing", "crisis"))
 no_words = set(("glass", "hawker", "prayers", "campaign", "campaigns", "cheeks", "election", "nigga", "niggas", "ain't", "shit", "fuck", "gop", "u", "obama", "romney"))
 
-keywords_a = set(("flood", "flooding", "flooded", "water", "overflow", "flow", "stream", "river", "overflowed", "soaked"))
+keywords_a = set(("flood", "flooding", "flooded", "water"))
+keywords_a_secondary = set(("overflow", "flow", "stream", "river", "overflowed", "soaked"))
 keywords_b = set(("electrical", "electricity", "power", "blackout", "wires", "phone", "pole", "poles"))
 keywords_c = set(("trap", "stuck", "trapped", "underneath", "between"))
 keywords_d = set(("blocked", "block", "road", "street", "avenue", "fallen", "tree", "pole"))
 keywords_e = set(("fire", "flames", "smoke", "fires", "flame", "smoking", "ignited", "ignite"))
 
 # Relevant tweet
-initial_relevant_tweet = "RT @newsday: Evacuation ordered for Fire Island as Hurricane #Sandy approaches http://t.co/0pTTrYoF"
+initial_relevant_tweet = "IF I LOSE POWER FOR A WEEK FROM THIS HURRICANE LIKE I DID LAST YEAR I'LL BE PISSED"
 
 
 '''
@@ -61,12 +62,17 @@ def gen_features(word_list):
 	return features
 
 def gen_categories(word_list):
-	categories = [0] * 2
+	categories = [0] * 4
 	for i in range(0, len(word_list)):
 		if word_list[i] in keywords_a:
 			categories[0] += 1
-
-	categories[1] = len(word_list)
+		if word_list[i] in keywords_a_secondary:
+			categories[1] += 1
+		if word_list[i] in no_words:
+			categories[2] += 1
+		if "hurricane" in word_list[i] and "sandy" not in word_list[i]:
+			features[0] -= 1
+	categories[3] = len(word_list)
 	return categories
 
 clusts = None
@@ -106,9 +112,13 @@ with open("class_0.txt", "w+") as out0:
 			t = row_to_id[i]
 			
 			if clusts[i] == 0:
+				if tweets[t][2] == initial_relevant_tweet:
+					print("Relevant class is class 0")
+					relevant_class = 0
 				out0.write(tweets[t][3] + "\n" + tweets[t][2] + "\n")
 			else:
 				if tweets[t][2] == initial_relevant_tweet:
+					print("Relevant class is class 1")
 					relevant_class = 1
 				out1.write(tweets[t][3] + "\n" + tweets[t][2] + "\n")
 				count += 1
@@ -138,19 +148,30 @@ with open(relevant_file_name) as relevant_file:
 		line_counter += 1
 
 count = 0
-categories = np.zeros((len(tweets), 6))
+categories = np.zeros((len(tweets), 4))
 for tweet_dict in relevant_tweets:
 	x = gen_categories(tweet_dict["tweet_text"])
 	for i in range(0, len(x)):
 		categories[count, i] = x[i]
 	count += 1
-mbk = cluster.MiniBatchKMeans(n_clusters = 5)
-clusts = mbk.fit_predict(categories)
-'''
-for i in range(len(clusts)):
-	if clusts[i] == 1:
-		print(relevant_tweets[i]["tweet_text"])
-		'''
+mbk = cluster.MiniBatchKMeans(n_clusters = 2)
+clusters = mbk.fit_predict(categories)
+
+relevant_a = []
+irrelevant_a = []
+print("Length of relevant tweets: ", len(relevant_tweets))
+print("Length of clusts: ", len(clusters))
+for i in range(len(clusters)):
+	if clusters[i] == 0:
+		relevant_a.append(relevant_tweets[i]["tweet_text"])
+	else:
+		irrelevant_a.append(relevant_tweets[i]["tweet_text"])
+
+print(irrelevant_a[0:3])
+print(relevant_a[0:3])
+
+
+		
 		
 
 
