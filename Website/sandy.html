@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
-    <title>crowdstorm > search</title>
+    <title>crowdstorm > Hurricane Sandy</title>
     <!-- Bootstrap Core CSS -->
     <link href="css/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -33,7 +33,7 @@
     <!-- Preloader - style you can find in spinners.css -->
     <div class="preloader">
         <svg class="circular" viewBox="25 25 50 50">
-			<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
     </div>
     <!-- Main wrapper  -->
     <div id="main-wrapper">
@@ -63,12 +63,17 @@
                     <ul id="sidebarnav">
                         <li class="nav-devider"></li>
                         <li class="nav-label">Home</li>
-                        <li> <a class="active" href="index.html" aria-expanded="false"><i class="fa fa-search"></i><span class="hide-menu">Search</span></a>
+                        <li> <a href="index.html" aria-expanded="false"><i class="fa fa-search"></i><span class="hide-menu">Search</span></a>
                         </li>
-                        <!--
-                        <li> <a href="current-location.html" aria-expanded="false"><i class="fa fa-map-marker"></i><span class="hide-menu">Current Location</span></a>
-                        </li>-->
-                        <li> <a href="favorites.html" aria-expanded="false"><i class="fa fa-heart"></i><span class="hide-menu">Favorites</span></a>
+                        <li> <a class="has-arrow active" href="favorites.html" aria-expanded="false"><i class="fa fa-heart"></i><span class="hide-menu">Favorites</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="favorites.html">Hurricane Matthew</a></li>
+                                <li><a href="favorites.html">Hurricane Arthur</a></li>
+                                <li><a href="sandy.html">Hurricane Sandy</a></li>
+                                <li><a href="favorites.html">Hurricane Isaac</a></li>
+                                <li><a href="favorites.html">Hurricane Irene</a></li>
+                                <li><a href="favorites.html">Hurricane Ike</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </nav>
@@ -82,11 +87,12 @@
             <!-- Bread crumb -->
             <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h3 class="text-primary">Search</h3> </div>
+                    <h3 class="text-primary">Hurricane Sandy</h3> </div>
                 <div class="col-md-7 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                        <li class="breadcrumb-item active">Search</li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Favorites</a></li>
+                        <li class="breadcrumb-item active">Hurricane Sandy</li>
                     </ol>
                 </div>
             </div>
@@ -95,21 +101,91 @@
             <div class="container-fluid">
                 <!-- Start Page Content -->
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="card p-120">
-                            <div class="media center-text p-bottom p-top">
-                                <div class="center-text">
-                                    <img class="logo-search media-middle" src="images/crowdstorm/crowdstorm-txt.png">
-                                    <img  id="logo-animate" class="icon-search media-middle" src="images/crowdstorm/crowdstorm-icon-search-1.png">
-                                    <p class="description-p">
-                                        Crowdstorm is a tool to track and monitor the damage that results from hurricanes using crowdsourced Twitter data.  By analyzing tweets during a specific hurricane period and determining which tweets relate to the natural disaster in question, Crowdstorm reports different damage events associated with the natural disaster.  Type a storm name below to see results for that storm.
-                                    </p>
-                                    <input type="text" class="tdl-new form-control search-input" placeholder="Enter Storm Name Here">
-                                    <button class="btn red-color">Search</button>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-blue" style="width: 100%;">
+                            <div class="hurricane-btn">
+                                <div class="media center-text pad-card center-content">
+                                    <div class="center-text">
+                                        <h2 class="font-white h2-fave">Hurricane Matthew</h2>
+                                        <h5 class="font-white">October 2016</h5>
+                                        <h6 class="font-white">Florida & South Carolina</h6>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </button>
                     </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-pink" style="width: 100%;">
+                            <div class="hurricane-btn">
+                                <div class="media center-text pad-card center-content">
+                                    <div class="center-text">
+                                        <h2 class="font-white h2-fave">Hurricane Arthur</h2>
+                                        <h5 class="font-white">July 2014</h5>
+                                        <h6 class="font-white">North Carolina</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="sandy.html">
+                            <button type="button" class="btn btn-orange" style="width: 100%;">
+                                <div class="hurricane-btn">
+                                    <div class="media center-text pad-card center-content">
+                                        <div class="center-text">
+                                            <h2 class="font-white h2-fave">Hurricane Sandy</h2>
+                                            <h5 class="font-white">October 2012</h5>
+                                            <h6 class="font-white">New Jersey & New York</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </button>
+                        </a>
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-green" style="width: 100%;">
+                            <div class="hurricane-btn">
+                                <div class="media center-text pad-card center-content">
+                                    <div class="center-text">
+                                        <h2 class="font-white h2-fave">Hurricane Isaac</h2>
+                                        <h5 class="font-white">August 2012</h5>
+                                        <h6 class="font-white">Louisiana & Mississippi</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-purple" style="width: 100%;">
+                            <div class="hurricane-btn">
+                                <div class="media center-text pad-card center-content">
+                                    <div class="center-text">
+                                        <h2 class="font-white h2-fave">Hurricane Irene</h2>
+                                        <h5 class="font-white">September 2011</h5>
+                                        <h6 class="font-white">North Carolina</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-turq" style="width: 100%;">
+                            <div class="hurricane-btn">
+                                <div class="media center-text pad-card center-content">
+                                    <div class="center-text">
+                                        <h2 class="font-white h2-fave">Hurricane Ike</h2>
+                                        <h5 class="font-white">September 2008</h5>
+                                        <h6 class="font-white">Florida, Texas, Louisiana, & Arkansas</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+
                 </div>
                 <!-- New: End Page Content -->
             </div>
@@ -139,7 +215,7 @@
     <script src="js/lib/morris-chart/dashboard1-init.js"></script>
 
 
-	<script src="js/lib/calendar-2/moment.latest.min.js"></script>
+    <script src="js/lib/calendar-2/moment.latest.min.js"></script>
     <!-- scripit init-->
     <script src="js/lib/calendar-2/semantic.ui.min.js"></script>
     <!-- scripit init-->
