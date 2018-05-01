@@ -1,0 +1,101 @@
+.cstorm-logo{
+	width: 100%;
+	padding-left: 20px;
+}
+.cstorm-icon{
+	width: 20%;
+	margin-left: 5px;
+}
+.logo-search{
+	width: 50%;
+	margin-top: 100px;
+	margin-left: 30px;
+	margin-bottom: 20px;
+	margin-right: 10px;
+}
+.center-text{
+	text-align: center;
+}
+
+.icon-search{
+	width: 15%;
+}
+
+.red-color{
+	background: #ED5466;
+	color: white;
+}
+
+.search-input{
+	display: inline;
+	width: 80%;
+}
+
+.p-bottom{
+	padding-bottom: 20%;
+}
+
+.p-top{
+	padding-top: 5%;
+}
+
+.description-p{
+	margin: 5%;
+	font-size: 1.2em;
+}
+
+.pad-card{
+	padding: 10%;
+}
+
+.center-content{
+	justify-content: center;
+}
+
+.hurricane-btn{
+	height: 300px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.footer{
+	bottom: 0;
+}
+
+.btn-blue{
+	color: white;
+	background: #1871CA;
+}
+
+.btn-pink{
+	color: white;
+	background: #ED5466;
+}
+
+.btn-orange{
+	color: white;
+	background: #EBAA2C;
+}
+.btn-green{
+	color: white;
+	background: #2DA63A;
+}
+
+.btn-turq{
+	color: white;
+	background: #2DA4A6;
+}
+.btn-purple{
+	color: white;
+	background: #8A55BA;
+}
+
+
+.font-white{
+	color: white;
+}
+
+.h2-fave{
+	font-weight: 600;
+}
