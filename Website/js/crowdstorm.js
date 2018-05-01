@@ -14,7 +14,7 @@ try{
 	oImage  =  window.document.getElementById("logo-animate");
   }
   oImage.src  =  images[(++iIdx)%(images.length)];
-  setTimeout('startAnimation()',1500);
+  setTimeout('startAnimation()',1000);
 }catch(oEx){
   //some error handling here
 }
