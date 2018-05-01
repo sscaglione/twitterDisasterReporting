@@ -42,12 +42,14 @@
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
                 <!-- Logo -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">
 
-                        <span>
-                            <img src="images/crowdstorm/crowdstorm-txt.png" alt="homepage" class="dark-logo cstorm-logo" />
-                            <img src="images/crowdstorm/crowdstorm-icon.png" alt="homepage" class="dark-logo cstorm-icon" />
-                        </span>
+                    <a class="navbar-brand" href="index.html">
+                        
+                        <!-- Logo text -->
+                        <b><img src="images/crowdstorm/crowdstorm-txt.png" alt="homepage" class="dark-logo cstorm-logo" /></b>
+                        <!-- Logo icon -->
+                        <span><img src="images/crowdstorm/crowdstorm-icon.png" alt="homepage" class="dark-logo cstorm-icon" /></span>
+                        <!--End Logo icon -->
                     </a>
                 </div>
                 <!-- End Logo -->
@@ -101,90 +103,18 @@
             <div class="container-fluid">
                 <!-- Start Page Content -->
                 <div class="row">
-                    <div class="col-md-4">
-                        <button type="button" class="btn btn-blue" style="width: 100%;">
-                            <div class="hurricane-btn">
-                                <div class="media center-text pad-card center-content">
-                                    <div class="center-text">
-                                        <h2 class="font-white h2-fave">Hurricane Matthew</h2>
-                                        <h5 class="font-white">October 2016</h5>
-                                        <h6 class="font-white">Florida & South Carolina</h6>
-                                    </div>
-                                </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-title">
+                                <h4>Reported Damage Categories</h4>
                             </div>
-                        </button>
-                    </div>
-                    <div class="col-md-4">
-                        <button type="button" class="btn btn-pink" style="width: 100%;">
-                            <div class="hurricane-btn">
-                                <div class="media center-text pad-card center-content">
-                                    <div class="center-text">
-                                        <h2 class="font-white h2-fave">Hurricane Arthur</h2>
-                                        <h5 class="font-white">July 2014</h5>
-                                        <h6 class="font-white">North Carolina</h6>
-                                    </div>
-                                </div>
+                            <div class="flot-container">
+                                <div id="flot-pie" class="flot-pie-container"></div>
                             </div>
-                        </button>
+                        </div>
+                        <!-- /# card -->
                     </div>
-                    <div class="col-md-4">
-                        <a href="sandy.html">
-                            <button type="button" class="btn btn-orange" style="width: 100%;">
-                                <div class="hurricane-btn">
-                                    <div class="media center-text pad-card center-content">
-                                        <div class="center-text">
-                                            <h2 class="font-white h2-fave">Hurricane Sandy</h2>
-                                            <h5 class="font-white">October 2012</h5>
-                                            <h6 class="font-white">New Jersey & New York</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </button>
-                        </a>
-                    </div>
-
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-4">
-                        <button type="button" class="btn btn-green" style="width: 100%;">
-                            <div class="hurricane-btn">
-                                <div class="media center-text pad-card center-content">
-                                    <div class="center-text">
-                                        <h2 class="font-white h2-fave">Hurricane Isaac</h2>
-                                        <h5 class="font-white">August 2012</h5>
-                                        <h6 class="font-white">Louisiana & Mississippi</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </button>
-                    </div>
-                    <div class="col-md-4">
-                        <button type="button" class="btn btn-purple" style="width: 100%;">
-                            <div class="hurricane-btn">
-                                <div class="media center-text pad-card center-content">
-                                    <div class="center-text">
-                                        <h2 class="font-white h2-fave">Hurricane Irene</h2>
-                                        <h5 class="font-white">September 2011</h5>
-                                        <h6 class="font-white">North Carolina</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </button>
-                    </div>
-                    <div class="col-md-4">
-                        <button type="button" class="btn btn-turq" style="width: 100%;">
-                            <div class="hurricane-btn">
-                                <div class="media center-text pad-card center-content">
-                                    <div class="center-text">
-                                        <h2 class="font-white h2-fave">Hurricane Ike</h2>
-                                        <h5 class="font-white">September 2008</h5>
-                                        <h6 class="font-white">Florida, Texas, Louisiana, & Arkansas</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </button>
-                    </div>
+                    <!-- /# column -->
 
                 </div>
                 <!-- New: End Page Content -->
@@ -206,6 +136,18 @@
     <script src="js/sidebarmenu.js"></script>
     <!--stickey kit -->
     <script src="js/lib/sticky-kit-master/dist/sticky-kit.min.js"></script>
+
+    <!--  flot-chart js -->
+    <script src="js/lib/flot-chart/excanvas.min.js"></script>
+    <script src="js/lib/flot-chart/jquery.flot.js"></script>
+    <script src="js/lib/flot-chart/jquery.flot.pie.js"></script>
+    <script src="js/lib/flot-chart/jquery.flot.time.js"></script>
+    <script src="js/lib/flot-chart/jquery.flot.stack.js"></script>
+    <script src="js/lib/flot-chart/jquery.flot.resize.js"></script>
+    <script src="js/lib/flot-chart/jquery.flot.crosshair.js"></script>
+    <script src="js/lib/flot-chart/curvedLines.js"></script>
+    <script src="js/lib/flot-chart/flot-tooltip/jquery.flot.tooltip.min.js"></script>
+    <script src="js/lib/flot-chart/flot-chart-init.js"></script>
     <!--Custom JavaScript -->
 
 
