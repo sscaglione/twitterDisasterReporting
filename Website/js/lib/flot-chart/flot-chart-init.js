@@ -156,24 +156,29 @@ $( function () {
 
 	var data = [
 		{
-			label: "Primary",
+			label: "Flood Damage",
 			data: 1,
-			color: "#8fc9fb"
+			color: "#1871CA"
         },
 		{
-			label: "Success",
+			label: "Electrical Issues",
 			data: 3,
-			color: "#007BFF"
+			color: "#ED5366"
         },
 		{
-			label: "Danger",
+			label: "People Trapped",
 			data: 9,
-			color: "#19A9D5"
+			color: "#ECAA2C"
         },
 		{
-			label: "Warning",
+			label: "Road Blocked",
 			data: 20,
-			color: "#DC3545"
+			color: "#2DA53A"
+        },
+        		{
+			label: "Fire",
+			data: 20,
+			color: "#2DA4A6"
         }
     ];
 
