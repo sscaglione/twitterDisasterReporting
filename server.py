@@ -1,6 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import logging
 import json
+import os
 
 class S(BaseHTTPRequestHandler):
     def _set_response(self):
@@ -29,13 +30,13 @@ class S(BaseHTTPRequestHandler):
 
     def get_events(self):
         events_buffer = []
-        with open("events.txt") as f:
+        with open("events.txt", "r", os.O_NONBLOCK) as f:
             with open("events_old.txt", "a+") as out:
                 for line in f:
                     out.write(line)
                     line = line.rstrip().split("\t")
-                    events_buffer.append([line[0], line[-1]])
-        with open("events.txt", "w+") as f:
+                    events_buffer.append(line)
+        with open("events.txt", "w+", os.O_NONBLOCK) as f:
             f.write("")
         return events_buffer
     def get_all_events(self):
@@ -43,11 +44,14 @@ class S(BaseHTTPRequestHandler):
         with open("events_old.txt") as f:
             for line in f:
                 line = line.rstrip().split("\t")
-                events_buffer.append([line[0], line[-1]])
+                events_buffer.append(line)
         return events_buffer
 
 
 def run(server_class=HTTPServer, handler_class=S, port=8080):
+    with open("events_old.txt", "w+") as f:
+        f.write("")
+
     logging.basicConfig(level=logging.INFO)
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
