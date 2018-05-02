@@ -170,7 +170,7 @@ $( function () {
 		{
 			label: "People Trapped",
 			data: classificationOccurrenceList[2],
-			color: "#ED5366"
+			color: "#ECAA2C"
         },
 		{
 			label: "Road Blocked",
