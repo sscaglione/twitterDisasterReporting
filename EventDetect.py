@@ -39,7 +39,7 @@ class EventDetect:
 		return((key, max_sim))
 		#key_match, score
 
-	def insert(self, t):
+	def insert(self, t, timestamp, user):
 		words = frozenset(t[0])
 		tweet = t[1]
 		cat = t[2]
@@ -51,18 +51,18 @@ class EventDetect:
 			if key == c[0]:
 				self.tweets[cat][c[0]][0].append(tweet)
 				if len(self.tweets[cat][c[0]][0]) >= self.threshold:
-					self.new_event(c[0], self.tweets[cat][c[0]], cat)
+					self.new_event(c[0], self.tweets[cat][c[0]], cat, user)
 					self.tweets[cat][c[0]][2] = 1
 			else:
 				t_list = self.tweets[cat][c[0]][0]
 				t_list.append(tweet)
 				if len(t_list) >= self.threshold:
-					self.new_event(c[0], self.tweets[cat][c[0]], cat)
+					self.new_event(c[0], self.tweets[cat][c[0]], cat, user)
 					self.tweets[cat][c[0]][2] = 1
 				self.tweets[cat][key] = [t_list, self.tweets[cat][c[0]][1], self.tweets[cat][c[0]][2]]
 				del self.tweets[cat][c[0]]
 		else:
-			self.tweets[cat][words] = [[tweet], dt.datetime.now(), 0]
+			self.tweets[cat][words] = [[tweet], timestamp, 0]
 
 	def prune(self, time):
 		new_tweets = {}
@@ -71,11 +71,11 @@ class EventDetect:
 				if tweets[c][t][1] >= time:
 					new_tweets[c][t] = tweets[c][t]
 		self.tweets = new_tweets
-	def new_event(self, k, t, c):
+	def new_event(self, k, t, c, u):
 		print("Is it new?")
 		print(t[2])
 		if not t[2]:
-			line = t[0][0] + "\t" + str(t[1]) + "\t" + str(c) + "\t0.75\n"
+			line = t[0][0] + "\t" + u + "\t" + str(t[1]) + "\t" + str(c) + "\t0.75\n"
 			with open("events.txt", "a+", os.O_NONBLOCK) as out:
 				out.write(line)
 			print(line)
@@ -101,6 +101,7 @@ if __name__ == '__main__':
 				sleep(dialation)
 				current_time += timedelta(seconds=1)
 			line = tweet_to_json(line)
+			user = "Unknown"
 			try:
 				t = json.loads(line)
 				if t['text']:
@@ -108,6 +109,7 @@ if __name__ == '__main__':
 					words, tags = sanitize(text)
 					if t['from_user_name'] != 0:
 						line = (words, tags, text, t['from_user_name'])
+						user = t['from_user_name']
 					else:
 						line = (words, tags, text, "json issues")
 			except ValueError as e:
@@ -124,7 +126,7 @@ if __name__ == '__main__':
 				continue
 			words = frozenset(line[0])
 			t = [words, line[2], c]
-			ed.insert(t)
+			ed.insert(t, tweet_time, user)
 			count += 1
 			line = f.readline().rstrip()
 			print(count)
