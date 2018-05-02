@@ -14,6 +14,7 @@ class S(BaseHTTPRequestHandler):
         if "all" in str(self.path):
             events = self.get_all_events()
         else:
+            logging.info('Retrieving all events...\n')
             events = self.get_events()
         self.wfile.write(json.dumps(events).encode('utf-8'))
 
