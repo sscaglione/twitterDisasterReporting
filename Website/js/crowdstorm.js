@@ -8,9 +8,13 @@ images[3] = "images/crowdstorm/crowdstorm-icon-search-2.png";
 var hurricanes = ["Hurricane Irene", "Hurricane Sandy", "Hurricane Matthew", "Hurricane Isaac", "Hurricane Ike", 
 "Hurricane Arthur"];
 
-var classes = ["Flood Damage", "Electrical Issues", "People Trapped", "Road Blocked", "Fire"]
+var classes = ["Flood Damage", "Electrical Issues", "People Trapped", "Road Blocked", "Fire"];
 var classesSpan = ["badge badge-a", "badge badge-b", "badge badge-c", 
-"badge badge-d", "badge badge-e"]
+"badge badge-d", "badge badge-e"];
+var classificationOccurrenceList = [0, 0, 0, 0, 0];
+var startTime = "2012-10-27 18:45:54"
+var d = new Date();
+d.setTime(1351377954000);
 
 // Front page code
 
@@ -158,9 +162,15 @@ function loadSandy() {
 				tweet = response[i];
 				console.log(tweet);
 				text = tweet[0];
-				date = tweet[1];
-				classification_int = tweet[2];
+                              user = tweet[1];
+				date = tweet[2];
+				classification_int = tweet[3];
+                              confidence = tweet[4];
+
 				classification_text = classes[classification_int];
+				var currentInstanceNum = classificationOccurrenceList[classification_int];
+				currentInstanceNum += 1;
+				classificationOccurrenceList[classification_int] = currentInstanceNum;
 
 				// Create table structure
 				var row = tbl.insertRow(1);
@@ -175,14 +185,105 @@ function loadSandy() {
 				classCell.appendChild(classSpan);
                 		row.appendChild(classCell);
 
+                              var confidenceCell = document.createElement("td");
+                              confidenceCell.appendChild(document.createTextNode(confidence));
+                              row.appendChild(confidenceCell);
+
 				var dateCell = document.createElement("td");
 				dateCell.appendChild(document.createTextNode(date));
                 		row.appendChild(dateCell);
 
+                              var userCell = document.createElement("td");
+                              userCell.appendChild(document.createTextNode(user));
+                              row.appendChild(userCell);
                 		
-				
 				// Add the row to the table
 				//tbl.appendChild(row)
+
+				        var data = [
+				    {
+				      label: "Flood Damage",
+				      data: classificationOccurrenceList[0],
+				      color: "#1871CA"
+				        },
+				    {
+				      label: "Electrical Issues",
+				      data: classificationOccurrenceList[1],
+				      color: "#ED5366"
+				        },
+				    {
+				      label: "People Trapped",
+				      data: classificationOccurrenceList[2],
+				      color: "#ECAA2C"
+				        },
+				    {
+				      label: "Road Blocked",
+				      data: classificationOccurrenceList[3],
+				      color: "#2DA53A"
+				        },
+				            {
+				      label: "Fire",
+				      data: classificationOccurrenceList[4],
+				      color: "#2DA4A6"
+				        }
+				    ];
+
+                              // Update the pie chart
+
+                              var plotObj = $.plot( $( "#flot-pie" ), data, {
+                                series: {
+                                  pie: {
+                                    show: true,
+                                    radius: 1,
+                                    label: {
+                                      show: false,
+
+                                    }
+                                  }
+                                },
+                                grid: {
+                                  hoverable: true
+                                },
+                                tooltip: {
+                                  show: true,
+                                  content: "%p.0%, %s, n=%n", // show percentages, rounding to 2 decimal places
+                                  shifts: {
+                                    x: 20,
+                                    y: 0
+                                  },
+                                  defaultTheme: false
+                                }
+                              } );
+                              plotObj.draw();
+                              //$.plot($('#flot-pie', [1, 2, 3, 4, 5]));
+
+                              //time passes, you now want to replot
+
+                              //var newData = [1, 2, 3, 4, 5];
+
+                              //plot.setData(newData);
+                              //plot.draw();
+
+                              // Update the count widgets
+                              var widgetA = document.getElementById("data-a");
+                              widgetA.innerHTML = classificationOccurrenceList[0];
+
+                              var widgetB = document.getElementById("data-b");
+                              widgetB.innerHTML = classificationOccurrenceList[1];
+
+                              var widgetC = document.getElementById("data-c");
+                              widgetC.innerHTML = classificationOccurrenceList[2];
+
+                              var widgetD = document.getElementById("data-d");
+                              widgetD.innerHTML = classificationOccurrenceList[3];
+
+                              var widgetE = document.getElementById("data-e");
+                              widgetE.innerHTML = classificationOccurrenceList[4];
+
+                              var timeWidget = document.getElementById("time");
+                              console.log(timeWidget);
+                              d.setTime += 1000;
+                              timeWidget.innerHTML = d;
 			}
 		}
 	};

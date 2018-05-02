@@ -6,6 +6,8 @@
 
 	function getRandomData() {
 
+
+
 		if ( data.length > 0 )
 			data = data.slice( 1 );
 
@@ -157,27 +159,27 @@ $( function () {
 	var data = [
 		{
 			label: "Flood Damage",
-			data: 1,
+			data: classificationOccurrenceList[0],
 			color: "#1871CA"
         },
 		{
 			label: "Electrical Issues",
-			data: 3,
+			data: classificationOccurrenceList[1],
 			color: "#ED5366"
         },
 		{
 			label: "People Trapped",
-			data: 9,
+			data: classificationOccurrenceList[2],
 			color: "#ECAA2C"
         },
 		{
 			label: "Road Blocked",
-			data: 20,
+			data: classificationOccurrenceList[3],
 			color: "#2DA53A"
         },
         		{
 			label: "Fire",
-			data: 20,
+			data: classificationOccurrenceList[4],
 			color: "#2DA4A6"
         }
     ];
@@ -206,7 +208,6 @@ $( function () {
 			defaultTheme: false
 		}
 	} );
-
 } );
 
 
