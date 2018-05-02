@@ -1821,6 +1821,27 @@ textarea {
 .badge-primary {
   background-color: #5c4ac7;
 }
+.badge-a{
+  background-color: #1871CA;
+  color: white;
+}
+.badge-b{
+  background-color: #ED5366;
+  color: white;
+}
+.badge-c{
+  background-color: #ECAA2C;
+  color: white;
+}
+.badge-d{
+  background-color: #2DA53A;
+  color: white;
+}
+.badge-e{
+  background-color: #2DA4A6;
+  color: white;
+}
+
 .badge-warning {
   background-color: #ffb22b;
 }

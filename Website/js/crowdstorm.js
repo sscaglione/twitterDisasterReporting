@@ -8,7 +8,15 @@ images[3] = "images/crowdstorm/crowdstorm-icon-search-2.png";
 var hurricanes = ["Hurricane Irene", "Hurricane Sandy", "Hurricane Matthew", "Hurricane Isaac", "Hurricane Ike", 
 "Hurricane Arthur"];
 
+var classes = ["Flood Damage", "Electrical Issues", "People Trapped", "Road Blocked", "Fire"]
+var classesSpan = ["badge badge-a", "badge badge-b", "badge badge-c", 
+"badge badge-d", "badge badge-e"]
+
 // Front page code
+
+function searchHurricane(){
+	searchElement = document.getElementById("search-box").value;
+}
 
 function autocomplete(inp, arr) {
   /*the autocomplete function takes two arguments,
@@ -152,6 +160,8 @@ function loadSandy() {
 				console.log(tweet);
 				text = tweet[0];
 				date = tweet[1];
+				classification_int = tweet[2];
+				classification_text = classes[classification_int];
 
 				// Create table structure
 				var row = document.createElement("tr");
@@ -159,9 +169,18 @@ function loadSandy() {
 				textCell.appendChild(document.createTextNode(text));
                 		row.appendChild(textCell);
 
+                		var classCell = document.createElement("td");
+                		var classSpan = document.createElement("span");
+                		classSpan.setAttribute("class", classesSpan[classification_int]);
+                		classSpan.innerHTML = classification_text;
+				classCell.appendChild(classSpan);
+                		row.appendChild(classCell);
+
 				var dateCell = document.createElement("td");
 				dateCell.appendChild(document.createTextNode(date));
                 		row.appendChild(dateCell);
+
+                		
 				
 				// Add the row to the table
 				tbl.appendChild(row)
@@ -173,6 +192,6 @@ function loadSandy() {
 	};
 	xhttp.open("GET", "http://localhost:8080", true);
 	xhttp.send();
-	setTimeout('loadSandy()',5000);
+	setTimeout('loadSandy()',10000);
 }
 
