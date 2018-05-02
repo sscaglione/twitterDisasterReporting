@@ -163,7 +163,7 @@ function loadSandy() {
 				classification_text = classes[classification_int];
 
 				// Create table structure
-				var row = document.createElement("tr");
+				var row = tbl.insertRow(1);
 				var textCell = document.createElement("td");
 				textCell.appendChild(document.createTextNode(text));
                 		row.appendChild(textCell);
@@ -182,7 +182,7 @@ function loadSandy() {
                 		
 				
 				// Add the row to the table
-				tbl.appendChild(row)
+				//tbl.appendChild(row)
 			}
 		}
 	};
