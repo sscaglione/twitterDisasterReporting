@@ -3,9 +3,9 @@ from datetime import datetime, date, time, timedelta
 import string
 import time
 
-start_time_s = "27 Oct 2012 13:36:08"
+start_time_s = "29 Oct 2012 13:36:08"
 start_time = datetime.strptime(start_time_s, '%d %b %Y %H:%M:%S')
-end_time_s = "27 Oct 2012 13:37:08"
+end_time_s = "29 Oct 2012 14:36:08"
 end_time = datetime.strptime(end_time_s, '%d %b %Y %H:%M:%S')
 
 output_file = open("sample.txt","w+", 0)
