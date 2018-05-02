@@ -1842,6 +1842,22 @@ textarea {
   color: white;
 }
 
+.color-a{
+  color: #1871CA;
+}
+.color-b{
+  color: #ED5366;
+}
+.color-c{
+  color: #ECAA2C;
+}
+.color-d{
+  color: #2DA53A;
+}
+.color-e{
+  color: #2DA4A6;
+}
+
 .badge-warning {
   background-color: #ffb22b;
 }
