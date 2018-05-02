@@ -12,6 +12,9 @@ var classes = ["Flood Damage", "Electrical Issues", "People Trapped", "Road Bloc
 var classesSpan = ["badge badge-a", "badge badge-b", "badge badge-c", 
 "badge badge-d", "badge badge-e"];
 var classificationOccurrenceList = [0, 0, 0, 0, 0];
+var startTime = "2012-10-27 18:45:54"
+var d = new Date();
+d.setTime(1351377954000);
 
 // Front page code
 
@@ -276,6 +279,11 @@ function loadSandy() {
 
                               var widgetE = document.getElementById("data-e");
                               widgetE.innerHTML = classificationOccurrenceList[4];
+
+                              var timeWidget = document.getElementById("time");
+                              console.log(timeWidget);
+                              d.setTime += 1000;
+                              timeWidget.innerHTML = d;
 			}
 		}
 	};
