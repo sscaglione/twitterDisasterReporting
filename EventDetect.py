@@ -1,5 +1,12 @@
 import datetime as dt
 import sys
+import time
+from sklearn.externals import joblib
+from tweet_to_json import tweet_to_json
+from build_cluster import sanitize, gen_features
+import numpy as np
+import json
+from tweet_cluster_naive import categorize
 
 class EventDetect:
 	def __init__(self, threshold):
@@ -36,7 +43,7 @@ class EventDetect:
 		if cat == 5:
 			return
 		c = self.closest_match(words, cat)
-		if c[1] > 0.8:
+		if c[1] > 0.7:
 			key = words.union(c[0])
 			if key == c[0]:
 				self.tweets[cat][c[0]][0].append(tweet)
@@ -63,8 +70,6 @@ class EventDetect:
 		self.tweets = new_tweets
 	def new_event(self, k, t):
 		if not t[2]:
-			print(k)
-			print(t)
 			line = t[0][0] + "\t" + str(t[1]) + "\n"
 			with open("events.txt", "a+") as out:
 				out.write(line)
@@ -74,19 +79,44 @@ if __name__ == '__main__':
 	ed = EventDetect(5)
 	#insert()
 	count = 1
-	with open("sample.txt") as f:
-		line = 1
-		line = f.readline().rstrip()
-		while(line):
-			tweet = line
-			line = f.readline()
-			words = frozenset(line.rstrip().split(","))
-			line = f.readline()
-			cat = int(float(line.rstrip()))
-			t = [words, tweet, cat]
-			ed.insert(t)
-			count += 1
+	km = joblib.load("cluster_model.pkl")
+	x = np.array([5, 5, 0, 15, 6]).reshape(1, -1)
+	relevant = km.predict(x)[0]
+	while(True):
+		with open("sandy_2.txt") as f:
+			line = 1
 			line = f.readline().rstrip()
+			while(line):
+				line = tweet_to_json(line)
+				try:
+					t = json.loads(line)
+					if t['text']:
+						text = t['text'].replace("\n", " ")
+						words, tags = sanitize(text)
+						if t['from_user_name'] != 0:
+							line = (words, tags, text, t['from_user_name'])
+						else:
+							line = (words, tags, text, "json issues")
+				except ValueError as e:
+					line = f.readline().rstrip()
+					continue
+				x = np.array(gen_features(line[0])).reshape(1, -1)
+				r = km.predict(x)[0]
+				if r != relevant:
+					line = f.readline().rstrip()
+					continue
+				c = categorize(line[0])
+				if c == 5:
+					line = f.readline().rstrip()
+					continue
+				words = frozenset(line[0])
+				t = [words, line[2], c]
+				ed.insert(t)
+				count += 1
+				line = f.readline().rstrip()
+				print(count)
+		print("WAIT")
+		time.sleep(5)
 
 	"""print(len(ed.tweets))
 	for i in ed.tweets:
