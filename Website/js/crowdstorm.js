@@ -16,6 +16,7 @@ var classesSpan = ["badge badge-a", "badge badge-b", "badge badge-c",
 
 function searchHurricane(){
 	searchElement = document.getElementById("search-box").value;
+	window.location.href = "sandy.html";
 }
 
 function autocomplete(inp, arr) {
@@ -145,12 +146,10 @@ function loadSandy() {
 			console.log("Sandy loading");
 			response = JSON.parse(xhttp.responseText);
 			console.log(response);
-			// Get div for table 
-			var tableDiv = document.getElementById('table-div');
 
 			// creates a <table> element and add the appropriate id
 			// and class
-        		var tbl = document.createElement("table");
+        		var tbl = document.getElementById("latest-tweets");
         		tbl.setAttribute("id", "latest-tweets");
         		tbl.setAttribute("class", "table");
 
@@ -185,9 +184,6 @@ function loadSandy() {
 				// Add the row to the table
 				tbl.appendChild(row)
 			}
-
-			// Add the table to the div
-			tableDiv.appendChild(tbl);
 		}
 	};
 	xhttp.open("GET", "http://localhost:8080", true);
