@@ -260,6 +260,22 @@ function loadSandy() {
 
                               //plot.setData(newData);
                               //plot.draw();
+
+                              // Update the count widgets
+                              var widgetA = document.getElementById("data-a");
+                              widgetA.innerHTML = classificationOccurrenceList[0];
+
+                              var widgetB = document.getElementById("data-b");
+                              widgetB.innerHTML = classificationOccurrenceList[1];
+
+                              var widgetC = document.getElementById("data-c");
+                              widgetC.innerHTML = classificationOccurrenceList[2];
+
+                              var widgetD = document.getElementById("data-d");
+                              widgetD.innerHTML = classificationOccurrenceList[3];
+
+                              var widgetE = document.getElementById("data-e");
+                              widgetE.innerHTML = classificationOccurrenceList[4];
 			}
 		}
 	};
