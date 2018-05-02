@@ -151,6 +151,16 @@ function loadSandy() {
 			response = JSON.parse(xhttp.responseText);
 			console.log(response);
 
+                              var timeWidget = document.getElementById("time");
+                              console.log(timeWidget);
+                              currentTime = d.getTime();
+                              // 1301207.453046 milliseconds = 21.6867908841 minutes
+                              currentTime = currentTime + 1301207.453046;
+                              console.log(currentTime);
+                              d.setTime(currentTime);
+                              console.log(d);
+                              timeWidget.innerHTML = d;
+
 			// creates a <table> element and add the appropriate id
 			// and class
         		var tbl = document.getElementById("latest-tweets");
@@ -280,10 +290,7 @@ function loadSandy() {
                               var widgetE = document.getElementById("data-e");
                               widgetE.innerHTML = classificationOccurrenceList[4];
 
-                              var timeWidget = document.getElementById("time");
-                              console.log(timeWidget);
-                              d.setTime += 1000;
-                              timeWidget.innerHTML = d;
+
 			}
 		}
 	};
