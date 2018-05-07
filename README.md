@@ -15,4 +15,4 @@ Start EventDetect:
   
 Open and utilize front end in browser:
 
-    /website/sandy.html
+    /Website/sandy.html
