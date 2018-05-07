@@ -1,13 +1,18 @@
+"""
+Build scikit learn clustering model using MiniBatchKmeans, classif input data, export relevant tweets, export model as .pkl file
+"""
+
+
 import json
 import numpy as np
 from sklearn import cluster
 from sklearn.externals import joblib
-#Read in tweets as json, create bag of words from sanitized text body
-tweets = {}
 
+tweets = {}
+#Words that indicate hurricane info, words that indicate disaster event, words that indicate irrelevant tweet
 keywords_primary = set(("hurricane", "sandy", "storm", "surge", "canceled"))
 keywords_secondary = set(("surge", "canceled", "evac", "evacuate", "flood", "wind", "winds", "police", "authorities", "emerg", "emergency", "emergencies", "closing", "crisis"))
-no_words = set(("glass", "hawker", "prayers", "campaign", "campaigns", "cheeks", "election", "nigga", "niggas", "ain't", "shit", "fuck", "gop", "u", "obama", "romney", "mittstormtips"))
+no_words = set(("glass", "hawker", "prayers", "campaign", "campaigns", "cheeks", "election", "ain't", "shit", "fuck", "gop", "u", "obama", "romney", "mittstormtips"))
 
 
 # Relevant tweet
@@ -23,6 +28,7 @@ e: fire
 '''
 
 def sanitize(text):
+	#Create a bag of symbol-free, lowercase words
 	words = text.split()
 	final = []
 	hashtags = []
@@ -63,6 +69,7 @@ def gen_features(word_list):
 if __name__ == '__main__':	
 	clusts = None
 	row_to_id = {}
+	#Load tweets, handle broken json issues
 	with open("29Oct2012-31Oct2012.json") as f:
 		for line in f:
 			try:
@@ -76,7 +83,8 @@ if __name__ == '__main__':
 						tweets[t["id"]] = (words, tags, text, "json issues")
 			except ValueError as e:
 				pass
-		
+	
+	#Build feature set
 	features = np.zeros((len(tweets), 5))
 	count = 0
 	for t in tweets:
@@ -87,6 +95,7 @@ if __name__ == '__main__':
 			features[count, i] = x[i]
 		count += 1
 
+	#Build model, apply model
 	mbk = cluster.MiniBatchKMeans(n_clusters=2)
 	clusts = mbk.fit_predict(features)
 	test = np.array(gen_features(sanitize(initial_relevant_tweet)[0]))
@@ -96,6 +105,7 @@ if __name__ == '__main__':
 	test_y = mbk.predict(test)
 	print(test_y)
 	pos_class = 0
+	#Output tweets in relevant category
 	with open("relevant.txt", "w+") as out:
 			for i in range(len(clusts)):
 				t = row_to_id[i]				
@@ -104,10 +114,10 @@ if __name__ == '__main__':
 					out.write(tweets[t][2] + "\n" + ",".join(tweets[t][0]) + "\n")
 	neg_class = len(clusts) - pos_class
 	percent_removed = 10 * float(neg_class) / len(clusts)
-	#print(str(percent_removed) + "% of tweets removed as noise")
-	#print(mbk.cluster_centers_)
 	x = np.array([5, 5, 0, 15, 6]).reshape(1, -1)
 	print("TRIAL Y")
 	print(mbk.predict(x)[0])
+
+	#Output model
 	joblib.dump(mbk, "cluster_model.pkl")
 

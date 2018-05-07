@@ -1,5 +1,7 @@
 import json
 
+#Apollo tweets use single quotes instead of json standard double quotes
+#This programs converts as many as possible to a form that can be read by json interpreters
 def tweet_to_json(line):
 	line = line.rstrip().replace("None", "\"null\"")
 	line_fix = []
